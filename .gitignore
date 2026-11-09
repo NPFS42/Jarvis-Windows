@@ -1,0 +1,12 @@
+.venv-build/
+.venv/
+__pycache__/
+build/
+dist/
+*.spec
+*.exe
+*.p12
+*.pfx
+*.key
+*.env
+*.log
