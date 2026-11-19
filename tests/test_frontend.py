@@ -1,11 +1,21 @@
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import jarvis_frontend as app
 
 class FrontendTests(unittest.TestCase):
+    def test_copy_paste_context_menu_preserves_production_security(self):
+        settings = SimpleNamespace(AreDefaultContextMenusEnabled=False,
+                                   AreDevToolsEnabled=False,
+                                   AreBrowserAcceleratorKeysEnabled=False)
+        app.enable_copy_paste_menu(settings)
+        self.assertTrue(settings.AreDefaultContextMenusEnabled)
+        self.assertFalse(settings.AreDevToolsEnabled)
+        self.assertFalse(settings.AreBrowserAcceleratorKeysEnabled)
+
     def test_tailscale_addresses_only(self):
         for addr in ("100.64.0.1", "100.93.225.62", "100.127.255.254", "fd7a:115c:a1e0::1"):
             self.assertTrue(app.is_tailscale_address(addr), addr)

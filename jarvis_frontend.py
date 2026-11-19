@@ -29,6 +29,11 @@ OPENER = build_opener(ProxyHandler({}))
 MAX_PEERS = 20
 
 
+def enable_copy_paste_menu(webview2_settings) -> None:
+    """Restore native text menus without enabling browser debugging."""
+    webview2_settings.AreDefaultContextMenusEnabled = True
+
+
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, *args, **kwargs):
         return None
@@ -236,6 +241,7 @@ def main() -> int:
 
         def install_guard():
             control = window.native.browser.webview
+            enable_copy_paste_menu(control.CoreWebView2.Settings)
             def navigation(sender, args):
                 if not allowed_navigation(args.Uri, destination):
                     args.Cancel = True
