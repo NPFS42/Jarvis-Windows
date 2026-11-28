@@ -1,13 +1,13 @@
+# STARS/NPFS local-first policy: hosted validation explicitly deferred; private runners are not exposed to public PRs.
 name: Jarvis Windows frontend build
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-  pull_request:
 permissions:
   contents: read
 jobs:
   build:
+    # DEFERRED: hosted allowance exhausted; use a reviewed isolated local build.
+    if: ${{ false }}
     runs-on: windows-latest
     timeout-minutes: 20
     steps:
